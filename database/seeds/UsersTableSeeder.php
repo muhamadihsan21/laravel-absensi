@@ -23,26 +23,34 @@ class UsersTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'role_id'   => '2',
-            'nama'      => 'Izzan',
-            'nrp'       => '987654321',
+            'nama'      => 'Bule',
+            'nrp'       => '001012025',
             'foto'      => 'default.jpg',
-            'password'  => Hash::make('987654321')
+            'password'  => Hash::make('bule123')
         ]);
 
         DB::table('users')->insert([
             'role_id'   => '2',
-            'nama'      => 'Barep',
-            'nrp'       => '112233445',
+            'nama'      => 'Ardi',
+            'nrp'       => '002012025',
             'foto'      => 'default.jpg',
-            'password'  => Hash::make('barep123')
+            'password'  => Hash::make('ardi123')
         ]);
 
         DB::table('users')->insert([
             'role_id'   => '2',
-            'nama'      => 'Bawul Ganteng',
-            'nrp'       => '123987456',
+            'nama'      => 'Reyhandi',
+            'nrp'       => '003012025',
             'foto'      => 'default.jpg',
-            'password'  => Hash::make('bawul123')
+            'password'  => Hash::make('rey123')
+        ]);
+
+        DB::table('users')->insert([
+            'role_id'   => '2',
+            'nama'      => 'Rayya',
+            'nrp'       => '004012025',
+            'foto'      => 'default.jpg',
+            'password'  => Hash::make('rayya123')
         ]);
     }
 }

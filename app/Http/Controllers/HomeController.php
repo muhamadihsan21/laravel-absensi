@@ -25,11 +25,18 @@ class HomeController extends Controller
     public function index()
     {
         $present = Present::whereUserId(auth()->user()->id)->whereTanggal(date('Y-m-d'))->first();
-        $url = 'https://kalenderindonesia.com/api/'.config('absensi.api_key').'/libur/masehi/'.date('Y/m');
-        $kalender = file_get_contents($url);
-        $kalender = json_decode($kalender, true);
-        $libur = false;
-        $holiday = null;
+        $url = 'https://kalenderindonesia.com/api/' . config('absensi.api_key') . '/libur/masehi/' . date('Y/m');
+        $response = @file_get_contents($url);
+        $kalender = json_decode($response, true);
+
+        if (is_array($kalender) && isset($kalender['data'])) {
+            // lanjut logika kamu
+        } else {
+            // fallback kalau gagal
+            $libur = false;
+            $holiday = null;
+        }
+
         if ($kalender['data'] != false) {
             if ($kalender['data']['holidays']) {
                 foreach ($kalender['data']['holidays'] as $key => $value) {
@@ -41,6 +48,6 @@ class HomeController extends Controller
                 }
             }
         }
-        return view('home', compact('present','libur','holiday'));
+        return view('home', compact('present', 'libur', 'holiday'));
     }
 }

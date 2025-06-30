@@ -116,7 +116,7 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-5 col-md-6">
                             <h1 class="text-white">Selamat Datang!</h1>
-                            <p class="text-lead text-light">Sistem Absensi Terpadu</p>
+                            <p class="text-lead text-light">Sistem Absensi Euphorbia Lanscape</p>
                         </div>
                     </div>
                 </div>
@@ -159,9 +159,8 @@
         <footer class="py-5">
             <div class="container">
                 <div class="copyright text-center">
-                    © {{ date('Y')}} Developed By <a href="https://maulanakevinp.github.io/" class="font-weight-bold ml-1"
-                                target="_lank">Kevin</a> Theme By <a href="https://www.creative-tim.com"
-                                class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+                    {{ date('Y') }} Developed By <a href="#" class="font-weight-bold ml-1" target="_blank">TheMans aNd Team</a> Theme By <a href="#" class="font-weight-bold ml-1" target="_blank">TheMans</a>
+
                 </div>
             </div>
         </footer>

@@ -1,17 +1,11 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\PresentsController;
+use App\Http\Controllers\CutiController;
+use App\Http\Controllers\AdminCutiController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,7 +18,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['web', 'auth', 'roles']], function(){
     Route::post('/logout', 'AuthController@logout')->name('logout');
-
+    Route::get('/cuti/riwayat', [CutiController::class, 'riwayat'])->name('cuti.riwayat');
     Route::get('/ganti-password', 'UsersController@gantiPassword')->name('ganti-password');
     Route::patch('/update-password/{user}', 'UsersController@updatePassword')->name('update-password');
     Route::get('/profil', 'UsersController@profil')->name('profil');
@@ -51,8 +45,28 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function(){
     });
 
     // ATUR IP ADDRESS DISINI
+    // Route::group(['middleware' => ['ipcheck:'.config('absensi.ip_address')]], function() {
+    //     Route::patch('/absen/{kehadiran}', 'PresentsController@checkOut')->name('kehadiran.check-out');
+    //     Route::post('/absen', 'PresentsController@checkIn')->name('kehadiran.check-in');
+    // });
     Route::group(['middleware' => ['ipcheck:'.config('absensi.ip_address')]], function() {
-        Route::patch('/absen/{kehadiran}', 'PresentsController@checkOut')->name('kehadiran.check-out');
         Route::post('/absen', 'PresentsController@checkIn')->name('kehadiran.check-in');
+        Route::post('/absen/pulang/{kehadiran}', [PresentsController::class, 'checkOut'])->name('kehadiran.check-out');
     });
+    Route::middleware(['auth', 'checkRole:karyawan', 'ipCheck'])->group(function () {
+});
+
+Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
+    // Pengajuan cuti user
+    Route::get('/cuti/create', [CutiController::class, 'create'])->name('cuti.create');
+    Route::post('/cuti/store', [CutiController::class, 'store'])->name('cuti.store');
+});
+
+Route::group(['roles' => 'Admin'], function () {
+    Route::get('/admin/cuti', [AdminCutiController::class, 'index'])->name('admin.cuti.index');
+    Route::post('/admin/cuti/{id}/approve', [AdminCutiController::class, 'approve'])->name('admin.cuti.approve');
+    Route::post('/admin/cuti/{id}/reject', [AdminCutiController::class, 'reject'])->name('admin.cuti.reject');
+});
+
+Route::post('/users/import-jabatan', [UsersController::class, 'importJabatan'])->name('users.importJabatan');
 });

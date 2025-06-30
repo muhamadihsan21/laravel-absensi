@@ -31,7 +31,18 @@
     <link href="{{ url('argon') }}/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
     <!-- CSS Files -->
     <link href="{{ url('argon') }}/assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+    <link href="{{ asset('css/custom_argon_dashboard.css') }}" rel="stylesheet" />
+
     @yield('styles')
+    <!-- CSS Files -->
+    <link href="{{ url('argon') }}/assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+    <link href="{{ url('css/custom_argon_dashboard.css') }}" rel="stylesheet" />
+
+    <style>
+        .header {
+            background: linear-gradient(to right, #60a5fa, #1e3a8a) !important;
+        }
+    </style>
 
 </head>
 
@@ -45,7 +56,7 @@
             </button>
             <!-- Brand -->
             <a class="navbar-brand pt-0" href="{{ route('home') }}">
-                <h1>SIAB</h1>
+                <h1>T N T</h1>
             </a>
             <!-- User -->
             <ul class="nav align-items-center d-md-none">
@@ -92,58 +103,82 @@
                 <!-- Navigation -->
                 <ul class="navbar-nav">
                     @if (auth()->user()->role->role == "Admin")
-                        @if (Request::segment(1) == 'kehadiran')
-                            <li class="nav-item active">
-                            <a class="nav-link active" href="{{ route('kehadiran.index') }}">
-                        @else
-                            <li class="nav-item">
-                            <a class="nav-link" href="{{ route('kehadiran.index') }}">
-                        @endif
-                                <i class="ni ni-check-bold text-primary"></i> Kehadiran
-                            </a>
-                        </li>
+                    @if (Request::segment(1) == 'kehadiran')
+                    <li class="nav-item active">
+                        <a class="nav-link active" href="{{ route('kehadiran.index') }}">
+                            @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('kehadiran.index') }}">
+                            @endif
+                            <i class="ni ni-check-bold text-primary"></i> Kehadiran
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.cuti.index') }}">
+                            <i class="ni ni-calendar-grid-58 text-danger"></i> Pengajuan Cuti
+                        </a>
 
-                        @if (Request::segment(1) == 'users')
-                            <li class="nav-item active">
-                            <a class="nav-link active" href="{{ route('users.index') }}">
-                        @else
-                            <li class="nav-item">
-                            <a class="nav-link" href="{{ route('users.index') }}">
-                        @endif
-                                <i class="ni ni-circle-08 text-primary"></i> Users
-                            </a>
-                        </li>
+
+
+                    @if (Request::segment(1) == 'users')
+                    <li class="nav-item active">
+                        <a class="nav-link active" href="{{ route('users.index') }}">
+                            @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('users.index') }}">
+                            @endif
+                            <i class="ni ni-circle-08 text-primary"></i> Users
+                        </a>
+                    </li>
                     @else
-                        @if (Request::segment(1) == 'daftar-hadir')
-                            <li class="nav-item active">
-                            <a class="nav-link active" href="{{ route('daftar-hadir') }}">
-                        @else
-                            <li class="nav-item">
-                            <a class="nav-link" href="{{ route('daftar-hadir') }}">
-                        @endif
-                                <i class="ni ni-check-bold text-primary"></i> Kehadiran
-                            </a>
-                        </li>
+                    @if (Request::segment(1) == 'daftar-hadir')
+                    <li class="nav-item active">
+                        <a class="nav-link active" href="{{ route('daftar-hadir') }}">
+                            @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('daftar-hadir') }}">
+                            @endif
+                            <i class="ni ni-check-bold text-primary"></i> Kehadiran
+                        </a>
+                    </li>
                     @endif
+
+                    {{-- === AJUKAN CUTI === --}}
+                    @if (Request::segment(1) == 'cuti')
+                    <li class="nav-item active">
+                        <a class="nav-link active" href="{{ route('cuti.create') }}">
+                            @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('cuti.create') }}">
+                            @endif
+                            <i class="ni ni-calendar-grid-58 text-orange"></i> Ajukan Cuti
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('cuti.riwayat') }}">
+                            <i class="ni ni-bullet-list-67 text-info"></i> Riwayat Cuti
+                        </a>
+                    </li>
+
 
                     @if (Request::segment(1) == 'profil')
-                        <li class="nav-item active">
+                    <li class="nav-item active">
                         <a class="nav-link active" href="{{ route('profil') }}">
-                    @else
-                        <li class="nav-item">
+                            @else
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('profil') }}">
-                    @endif
+                            @endif
                             <i class="ni ni-single-02 text-yellow"></i> Profil
                         </a>
                     </li>
 
                     @if (Request::segment(1) == 'ganti-password')
-                        <li class="nav-item active">
+                    <li class="nav-item active">
                         <a class="nav-link active" href="{{ route('ganti-password') }}">
-                    @else
-                        <li class="nav-item">
+                            @else
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('ganti-password') }}">
-                    @endif
+                            @endif
                             <i class="ni ni-key-25 text-green"></i> Ganti Password
                         </a>
                     </li>
@@ -201,27 +236,30 @@
         <!-- End Navbar -->
 
         <!-- Header -->
-        <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+        <div class="header pb-8 pt-5 pt-md-8" style="background: linear-gradient(to right, #60a5fa, #1e3a8a);">
+
             <div class="container-fluid">
                 <div class="header-body">
                     <!-- Card stats -->
                     @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     @endif
                     @if (session('error'))
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            {{ session('error') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     @endif
-                    @if ($errors->any())<div class="alert alert-danger alert-dismissible fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
+                    @if ($errors->any())<div class="alert alert-danger alert-dismissible fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
+                    </div>@endif
                     @yield('header')
                 </div>
             </div>
@@ -233,9 +271,8 @@
                 <div class="row align-items-center justify-content-xl-between">
                     <div class="col-xl-6">
                         <div class="copyright text-center text-xl-left text-muted">
-                            © {{ date('Y')}} Developed By <a href="https://maulanakevinp.github.io/" class="font-weight-bold ml-1"
-                                target="_lank">Kevin</a> Theme By <a href="https://www.creative-tim.com"
-                                class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+                            {{ date('Y') }} Developed By <a href="#" class="font-weight-bold ml-1" target="_blank">TheMans aNd Team</a> Theme By <a href="#" class="font-weight-bold ml-1" target="_blank">TheMans</a>
+
                         </div>
                     </div>
                 </div>
